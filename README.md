@@ -2,10 +2,6 @@
 
 Built a basic version of PayTM. User signup, login and change password functionality provided. User can send money to someone in the List of people. Authentication using JWT and authorization provided.
 
-## Features
-
-List and briefly describe the main features of your application.
-
 ## Tech Stack
 
 - **Frontend:**
