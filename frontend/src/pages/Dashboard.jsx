@@ -3,7 +3,7 @@ import { AppBar } from "../components/Appbar";
 import { Input } from "../components/Input";
 import { SearchResults } from "../components/SearchList";
 import { balanceAtom, filterAtom, searchListAtom, userAtom } from "../store/dashboard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +56,7 @@ export function DashBoard(){
         })
     })
 
+    let dVal=useDebounce(filter);
     useEffect(()=>{
         axios.get("http://localhost:5000/api/user/bulk",{
             params:{
@@ -65,7 +66,7 @@ export function DashBoard(){
             setUserlist(response.data.users);
         })
         
-    },[filter])
+    },[dVal])
     
     return (
         <div>
@@ -98,4 +99,20 @@ export function DashBoard(){
             
         </div>
     )
+}
+
+function useDebounce(value){
+    const[debouncedValue,setDebouncedValue]=useState(value);
+
+    useEffect(()=>{
+        let timerID=setTimeout(()=>{
+            setDebouncedValue(value);
+        },500)
+
+        return ()=>{
+            clearTimeout(timerID);
+        }
+    },[value])
+
+    return debouncedValue;
 }
